@@ -5,11 +5,11 @@
 
     tools:context=".MainActivity$PlaceholderFragment">
 
-        <ListView android:background="@drawable/touch_selector"
+        <ListView
             android:layout_width="match_parent"
             android:layout_height="match_parent" android:padding="16dp"
             android:id = "@+id/scores_list"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="15sp"
+
+
             />
 </LinearLayout>
