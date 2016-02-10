@@ -1,12 +1,15 @@
 package barqsoft.footballscores;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class MainActivity extends ActionBarActivity
 {
@@ -27,13 +30,14 @@ public class MainActivity extends ActionBarActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         Log.d(LOG_TAG, "Reached MainActivity onCreate");
-        if (savedInstanceState == null) {
+        if (my_main == null) {
             my_main = new PagerFragment();
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, my_main)
                     .commit();
         }
     }
+
 
 
     @Override

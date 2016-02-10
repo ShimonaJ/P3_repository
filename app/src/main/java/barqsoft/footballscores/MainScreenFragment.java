@@ -2,12 +2,15 @@ package barqsoft.footballscores;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.CamcorderProfile;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,11 +25,13 @@ import barqsoft.footballscores.service.myFetchService;
  */
 public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-    public scoresAdapter mAdapter;
+  //  public scoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
-
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
     public MainScreenFragment()
     {
     }
@@ -47,22 +52,31 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
 
-        final ListView score_list = (ListView) rootView.findViewById(R.id.scores_list);
-        mAdapter = new scoresAdapter(getActivity(),null,0);
-        score_list.setAdapter(mAdapter);
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.scores_list);
+        mRecyclerView.setHasFixedSize(true);
+
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
+
+        // specify an adapter (see also next example)
+        mAdapter = new MyScoresAdapter(MainActivity.selected_match_id);
+        mRecyclerView.setAdapter(mAdapter);
+       // mAdapter = new scoresAdapter(getActivity(),null,0);
+       // score_list.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER,null,this);
-        mAdapter.detail_match_id = MainActivity.selected_match_id;
-        score_list.setOnItemClickListener(new AdapterView.OnItemClickListener()
-        {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
-            {
-                ViewHolder selected = (ViewHolder) view.getTag();
-                mAdapter.detail_match_id = selected.match_id;
-                MainActivity.selected_match_id = (int) selected.match_id;
-                mAdapter.notifyDataSetChanged();
-            }
-        });
+       // mAdapter.detail_match_id = MainActivity.selected_match_id;
+//        mRecyclerView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+//        {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id)
+//            {
+//                ViewHolder selected = (ViewHolder) view.getTag();
+//                mAdapter.detail_match_id = selected.match_id;
+//                MainActivity.selected_match_id = (int) selected.match_id;
+//                mAdapter.notifyDataSetChanged();
+//            }
+//        });
         return rootView;
     }
 
@@ -70,8 +84,11 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle)
     {
-        return new CursorLoader(getActivity(),DatabaseContract.scores_table.buildScoreWithDate(),
-                null,null,fragmentdate,null);
+        if(fragmentdate[0]!=null) {
+            return new CursorLoader(getActivity(), DatabaseContract.scores_table.buildScoreWithDate(),
+                    null, null, fragmentdate, null);
+        }
+        return null;
     }
 
     @Override
@@ -95,14 +112,18 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
             cursor.moveToNext();
         }
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
-        mAdapter.swapCursor(cursor);
+    //    mAdapter.swapCursor(cursor);
+
+        ((MyScoresAdapter) mAdapter).setDataCursor(cursor);
+       // ((MyScoresAdapter) mAdapter).notifyDataSetChanged();
         //mAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader)
     {
-        mAdapter.swapCursor(null);
+        mRecyclerView.setAdapter(null);
+       // mAdapter.swapCursor(null);
     }
 
 

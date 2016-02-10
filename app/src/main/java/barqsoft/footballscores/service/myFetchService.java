@@ -132,6 +132,7 @@ public class myFetchService extends IntentService
             Log.e(LOG_TAG,e.getMessage());
         }
     }
+
     private void processJSONdata (String JSONdata,Context mContext, boolean isReal)
     {
         //JSON data
