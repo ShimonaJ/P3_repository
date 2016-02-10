@@ -120,8 +120,8 @@ public class myFetchService extends IntentService
                     return;
                 }
 
-
-                processJSONdata(JSON_data, getApplicationContext(), true);
+                processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+               // processJSONdata(JSON_data, getApplicationContext(), true);
             } else {
                 //Could not Connect
                 Log.d(LOG_TAG, "Could not connect to server.");
