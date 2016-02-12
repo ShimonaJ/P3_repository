@@ -70,7 +70,7 @@ public class MyScoresAdapter extends RecyclerView.Adapter<MyScoresAdapter.ViewHo
         this.detail_match_id =selected_match_id;
         notifyDataSetChanged();
     }
-public void setDataCursor(Cursor cursor){
+public void swapCursor(Cursor cursor){
 
     this.mCursor = cursor;
     notifyDataSetChanged();

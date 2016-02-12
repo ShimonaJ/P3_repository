@@ -1,7 +1,7 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    tools:context=".MainActivity" tools:ignore="MergeRootFrame" android:orientation="vertical"
+    tools:context=".MainActivity" tools:ignore="MergeRootFrame"
     >
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -17,7 +17,9 @@
             android:layout_width="wrap_content" android:text="Football Scores"
             android:layout_height="match_parent" />
     </android.support.v7.widget.Toolbar>
-    <FrameLayout
-        android:layout_width="match_parent" android:id="@+id/container"
-        android:layout_height="match_parent"></FrameLayout>
-</LinearLayout>
+    <FrameLayout android:layout_gravity="center_horizontal"
+        android:layout_width="360dp" android:id="@+id/container"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"></FrameLayout>
+</RelativeLayout>

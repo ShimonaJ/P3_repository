@@ -114,7 +114,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         //Log.v(FetchScoreTask.LOG_TAG,"Loader query: " + String.valueOf(i));
     //    mAdapter.swapCursor(cursor);
 
-        ((MyScoresAdapter) mAdapter).setDataCursor(cursor);
+        ((MyScoresAdapter) mAdapter).swapCursor(cursor);
        // ((MyScoresAdapter) mAdapter).notifyDataSetChanged();
         //mAdapter.notifyDataSetChanged();
     }
