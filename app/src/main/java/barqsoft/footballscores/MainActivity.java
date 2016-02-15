@@ -11,6 +11,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import barqsoft.footballscores.sync.FootballSyncAdapter;
+
 public class MainActivity extends ActionBarActivity
 {
     public static int selected_match_id;
@@ -36,6 +38,7 @@ public class MainActivity extends ActionBarActivity
                     .add(R.id.container, my_main)
                     .commit();
         }
+        FootballSyncAdapter.initializeSyncAdapter(this);
     }
 
 

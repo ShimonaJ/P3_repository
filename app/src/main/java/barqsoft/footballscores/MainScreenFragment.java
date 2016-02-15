@@ -29,13 +29,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import barqsoft.footballscores.service.myFetchService;
+import barqsoft.footballscores.sync.FootballSyncAdapter;
 
 /**
  * A placeholder fragment containing a simple view.
  */
 public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
-  //  public scoresAdapter mAdapter;
+  //  public ScoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
     private String[] fragmentdate = new String[1];
     private int last_selected_item = -1;
@@ -53,8 +54,9 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
     private void update_scores()
     {
-        Intent service_start = new Intent(getActivity(), myFetchService.class);
-        getActivity().startService(service_start);
+        FootballSyncAdapter.syncImmediately(getContext());
+//        Intent service_start = new Intent(getActivity(), myFetchService.class);
+//        getActivity().startService(service_start);
     }
     @Override
     public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
@@ -145,7 +147,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
         });
-       // mAdapter = new scoresAdapter(getActivity(),null,0);
+       // mAdapter = new ScoresAdapter(getActivity(),null,0);
        // score_list.setAdapter(mAdapter);
         getLoaderManager().initLoader(SCORES_LOADER,null,this);
         if (savedInstanceState != null) {

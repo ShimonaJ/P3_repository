@@ -129,54 +129,7 @@ public class myFetchService extends IntentService
         }
     }
 }
-//
-//
-//
-//
-//    catch (Exception e)
-//        {
-//            Log.e(LOG_TAG,"Exception here" + e.getMessage());
-//        }
-//        finally {
-//            if(m_connection != null)
-//            {
-//                m_connection.disconnect();
-//            }
-//            if (reader != null)
-//            {
-//                try {
-//                    reader.close();
-//                }
-//                catch (IOException e)
-//                {
-//                    Log.e(LOG_TAG,"Error Closing Stream");
-//                }
-//            }
-//        }
-//        try {
-//            if (JSON_data != null) {
-//                //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
-//                JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
-////                if (matches.length() == 0) {
-////                    //if there is no data, call the function on dummy data
-////                    //this is expected behavior during the off season.
-////                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
-////                    return;
-////                }
-//
-//              //  processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
-//                processJSONdata(JSON_data, getApplicationContext(), true);
-//            } else {
-//                //Could not Connect
-//                Log.d(LOG_TAG, "Could not connect to server.");
-//                setFootballStatus(getContext(), FOOTBALL_STATUS_SERVER_DOWN);
-//
-//            }
-//        }
-//        catch(Exception e)
-//        {
-//            Log.e(LOG_TAG,e.getMessage());
-//        }
+
     return ;
     }
 
