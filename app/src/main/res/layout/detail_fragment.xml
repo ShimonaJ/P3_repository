@@ -5,30 +5,20 @@
   >
 
 
-        <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|bottom"
-        android:gravity="center" android:contentDescription="Share Score"
-        android:text="@string/share_text" android:textColor="@color/white"
-        android:id="@+id/share_button"
-        android:drawableLeft="@android:drawable/ic_menu_share"
-
-        />
     <LinearLayout
         android:layout_width="match_parent"  android:gravity="right"   android:layout_gravity="right|center"
         android:layout_height="wrap_content" android:orientation="vertical"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_weight="1"
-            android:text="@string/test_text"
-            android:textColor="@android:color/white"
-            android:textSize="@dimen/League"
-            android:id="@+id/league_textview"/>
-        <TextView
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="@string/test_text"-->
+            <!--android:textColor="@android:color/white"-->
+            <!--android:textSize="@dimen/League"-->
+            <!--android:id="@+id/league_textview"/>-->
+        <TextView android:focusable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"

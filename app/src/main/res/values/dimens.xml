@@ -4,7 +4,18 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="list_horizonal_margin">2dp</dimen>
     <dimen name="share_button_margin">150dp</dimen>
-    <dimen name="TeamNames">15sp</dimen>
-    <dimen name="Score">30sp</dimen>
-    <dimen name="League">13sp</dimen>
+    <dimen name="TeamNames">12sp</dimen>
+    <dimen name="Score">20sp</dimen>
+    <dimen name="League">20sp</dimen>
+
+    <!-- Needed if we aren't including the Material Design Library -->
+    <dimen name="appbar_elevation">4dp</dimen>
+
+    <!-- The amount we want the details view to overlap the app bar -->
+    <dimen name="details_app_bar_overlap">24dp</dimen>
+
+    <!-- Today Widget -->
+    <dimen name="widget_today_default_width">40dp</dimen>
+    <dimen name="widget_today_default_height">40dp</dimen>
+
 </resources>

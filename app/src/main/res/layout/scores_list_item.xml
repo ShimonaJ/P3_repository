@@ -2,54 +2,89 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:elevation="2dp"  android:layout_marginBottom="10dp"
+    android:elevation="8dp"  android:layout_marginBottom="10dp"
     android:background="@drawable/list_item">
+    <LinearLayout android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent" android:orientation="horizontal"
+        android:layout_height="wrap_content">
+
+        <TextView android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="start|center"
+android:layout_weight="1"
+            android:text="@string/test_text"
+android:textColor="@color/primary"
+            android:textSize="@dimen/League"
+            android:id="@+id/league_textview"/>
+        <LinearLayout
+            android:layout_width="wrap_content" android:orientation="vertical"
+            android:layout_height="match_parent">
+        <ImageView  android:id="@+id/share_button" android:focusable="true" android:contentDescription="@string/share_text"
+            android:layout_width="wrap_content"  android:src="@android:drawable/ic_menu_share"
+            android:layout_height="wrap_content" />
+        <TextView android:focusable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+android:textSize="12sp"
+            android:text="@string/test_text"
+
+
+            android:id="@+id/data_textview"/>
+        </LinearLayout>
+
+    </LinearLayout>
+    <View android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
 
     <LinearLayout
         android:orientation="horizontal" android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:padding="@dimen/activity_horizontal_margin"
         >
         <TextView
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-
-            android:gravity="left"
+android:textSize="@dimen/TeamNames"
+            android:gravity="right|center"
             android:text="@string/test_text"
             android:id="@+id/home_name"/>
 
 
-        <LinearLayout
+        <LinearLayout android:focusable="true" android:id="@+id/focus_score"
             android:layout_width="wrap_content" android:padding="1dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="horizontal">
 
 
-            <ImageView
+            <ImageView android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:id="@+id/home_crest"/>
 
             <FrameLayout android:layout_gravity="center" android:padding="5dp"
-                android:layout_width="60dp" android:background="@color/accent"
-                android:layout_height="wrap_content">
+                android:layout_width="70dp" android:background="@color/accent"
+                android:layout_height="50dp">
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
 
                 android:text="@string/test_text"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:id="@+id/score_textview"
-                android:textIsSelectable="true" />
+                 />
 
             </FrameLayout>
-            <ImageView
+            <ImageView android:layout_margin="10dp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:id="@+id/away_crest"/>
         </LinearLayout>
@@ -64,14 +99,7 @@
 
 
     </LinearLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-android:paddingRight="10dp"
-        android:text="@string/test_text"
-        android:layout_gravity="bottom"
-        android:gravity="right|center"
-        android:id="@+id/data_textview"/>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

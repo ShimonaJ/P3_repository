@@ -1,5 +1,9 @@
 package barqsoft.footballscores;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+
 /**
  * Created by yehya khaled on 3/3/2015.
  */
@@ -82,6 +86,20 @@ public class Utilies
         {
             return String.valueOf(home_goals) + " - " + String.valueOf(awaygoals);
         }
+    }
+    /**
+     * Returns true if the network is available or about to become available.
+     *
+     * @param c Context used to get the ConnectivityManager
+     * @return true if the network is available
+     */
+    static public boolean isNetworkAvailable(Context c) {
+        ConnectivityManager cm =
+                (ConnectivityManager)c.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        return activeNetwork != null &&
+                activeNetwork.isConnectedOrConnecting();
     }
 
     public static int getTeamCrestByTeamName (String teamname)

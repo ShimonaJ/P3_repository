@@ -4,7 +4,10 @@ import android.app.IntentService;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.preference.PreferenceManager;
+import android.support.annotation.IntDef;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -15,6 +18,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -35,6 +40,15 @@ public class myFetchService extends IntentService
     {
         super("myFetchService");
     }
+    @Retention(RetentionPolicy.SOURCE)
+    @IntDef({FOOTBALL_STATUS_OK, FOOTBALL_STATUS_SERVER_DOWN, FOOTBALL_STATUS_SERVER_INVALID,  FOOTBALL_STATUS_UNKNOWN, FOOTBALL_STATUS_INVALID})
+    public @interface FootballStatus {}
+
+    public static final int FOOTBALL_STATUS_OK = 0;
+    public static final int FOOTBALL_STATUS_SERVER_DOWN = 1;
+    public static final int FOOTBALL_STATUS_SERVER_INVALID = 2;
+    public static final int FOOTBALL_STATUS_UNKNOWN = 3;
+    public static final int FOOTBALL_STATUS_INVALID = 4;
 
     @Override
     protected void onHandleIntent(Intent intent)
@@ -85,55 +99,88 @@ public class myFetchService extends IntentService
             }
             if (buffer.length() == 0) {
                 // Stream was empty.  No point in parsing.
+                setFootballStatus(getBaseContext(), FOOTBALL_STATUS_SERVER_DOWN);
+
                 return;
             }
             JSON_data = buffer.toString();
+          //  JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
+            processJSONdata(JSON_data, getApplicationContext(), true);
         }
-        catch (Exception e)
-        {
-            Log.e(LOG_TAG,"Exception here" + e.getMessage());
-        }
-        finally {
-            if(m_connection != null)
-            {
-                m_connection.disconnect();
-            }
-            if (reader != null)
-            {
-                try {
-                    reader.close();
-                }
-                catch (IOException e)
-                {
-                    Log.e(LOG_TAG,"Error Closing Stream");
-                }
-            }
-        }
-        try {
-            if (JSON_data != null) {
-                //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
-                JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
-                if (matches.length() == 0) {
-                    //if there is no data, call the function on dummy data
-                    //this is expected behavior during the off season.
-                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
-                    return;
-                }
 
-              //  processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
-                processJSONdata(JSON_data, getApplicationContext(), true);
-            } else {
-                //Could not Connect
-                Log.d(LOG_TAG, "Could not connect to server.");
-            }
-        }
-        catch(Exception e)
-        {
-            Log.e(LOG_TAG,e.getMessage());
+    catch (IOException e) {
+    Log.e(LOG_TAG, "Error ", e);
+    // If the code didn't successfully get the weather data, there's no point in attempting
+    // to parse it.
+    setFootballStatus(getApplicationContext(), FOOTBALL_STATUS_SERVER_DOWN);
+} catch (JSONException e) {
+    Log.e(LOG_TAG, e.getMessage(), e);
+    e.printStackTrace();
+    setFootballStatus(getApplicationContext(), FOOTBALL_STATUS_SERVER_INVALID);
+} finally {
+    if ( m_connection!= null) {
+        m_connection.disconnect();
+    }
+    if (reader != null) {
+        try {
+            reader.close();
+        } catch (final IOException e) {
+            Log.e(LOG_TAG, "Error closing stream", e);
         }
     }
+}
+//
+//
+//
+//
+//    catch (Exception e)
+//        {
+//            Log.e(LOG_TAG,"Exception here" + e.getMessage());
+//        }
+//        finally {
+//            if(m_connection != null)
+//            {
+//                m_connection.disconnect();
+//            }
+//            if (reader != null)
+//            {
+//                try {
+//                    reader.close();
+//                }
+//                catch (IOException e)
+//                {
+//                    Log.e(LOG_TAG,"Error Closing Stream");
+//                }
+//            }
+//        }
+//        try {
+//            if (JSON_data != null) {
+//                //This bit is to check if the data contains any matches. If not, we call processJson on the dummy data
+//                JSONArray matches = new JSONObject(JSON_data).getJSONArray("fixtures");
+////                if (matches.length() == 0) {
+////                    //if there is no data, call the function on dummy data
+////                    //this is expected behavior during the off season.
+////                    processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+////                    return;
+////                }
+//
+//              //  processJSONdata(getString(R.string.dummy_data), getApplicationContext(), false);
+//                processJSONdata(JSON_data, getApplicationContext(), true);
+//            } else {
+//                //Could not Connect
+//                Log.d(LOG_TAG, "Could not connect to server.");
+//                setFootballStatus(getContext(), FOOTBALL_STATUS_SERVER_DOWN);
+//
+//            }
+//        }
+//        catch(Exception e)
+//        {
+//            Log.e(LOG_TAG,e.getMessage());
+//        }
+    return ;
+    }
 
-    private void processJSONdata (String JSONdata,Context mContext, boolean isReal)
+    private void processJSONdata (String JSONdata,Context mContext, boolean isReal) throws JSONException
     {
         //JSON data
         // This set of league codes is for the 2015/2016 season. In fall of 2016, they will need to
@@ -177,7 +224,7 @@ public class myFetchService extends IntentService
         String match_day = null;
 
 
-        try {
+
             JSONArray matches = new JSONObject(JSONdata).getJSONArray(FIXTURES);
 
 
@@ -270,14 +317,25 @@ public class myFetchService extends IntentService
             values.toArray(insert_data);
             inserted_data = mContext.getContentResolver().bulkInsert(
                     DatabaseContract.BASE_CONTENT_URI,insert_data);
+            setFootballStatus(mContext, FOOTBALL_STATUS_OK);
 
             //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
-        }
-        catch (JSONException e)
-        {
-            Log.e(LOG_TAG,e.getMessage());
-        }
+
+
 
     }
+    /**
+     * Sets the location status into shared preference.  This function should not be called from
+     * the UI thread because it uses commit to write to the shared preferences.
+     * @param c Context to get the PreferenceManager from.
+     * @param footballStatus The IntDef value to set
+     */
+    static private void setFootballStatus(Context c, @FootballStatus int footballStatus){
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(c);
+        SharedPreferences.Editor spe = sp.edit();
+        spe.putInt(c.getString(R.string.pref_football_status_key), footballStatus);
+        spe.commit();
+    }
+
 }
 
