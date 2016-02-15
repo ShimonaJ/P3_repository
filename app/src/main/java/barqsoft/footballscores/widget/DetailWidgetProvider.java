@@ -77,7 +77,7 @@ public class DetailWidgetProvider extends AppWidgetProvider {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private void setRemoteAdapter(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(R.id.widget_list,
-                new Intent(context, DetailWidgetRemoteViewsService.class));
+                new Intent(context, DetailWidgetRemoteViewService.class));
     }
 
     /**
@@ -88,6 +88,6 @@ public class DetailWidgetProvider extends AppWidgetProvider {
     @SuppressWarnings("deprecation")
     private void setRemoteAdapterV11(Context context, @NonNull final RemoteViews views) {
         views.setRemoteAdapter(0, R.id.widget_list,
-                new Intent(context, DetailWidgetRemoteViewsService.class));
+                new Intent(context, DetailWidgetRemoteViewService.class));
     }
 }
