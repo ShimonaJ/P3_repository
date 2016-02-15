@@ -28,7 +28,7 @@ public class WidgetUpdateIntentService extends IntentService {
     {
         super("WidgetUpdateIntentService");
     }
-    public ScoresAdapter mAdapter;
+
     @Override
     protected void onHandleIntent(Intent intent)
     {
@@ -44,7 +44,7 @@ public class WidgetUpdateIntentService extends IntentService {
         String string =mformat.format(fragmentdate);
         // we'll query our contentProvider, as always
 
-        Cursor cursor = getContentResolver().query(footballUri, null, null, new String[]{string}, DatabaseContract.scores_table.TIME_COL + " desc");
+        Cursor cursor = getContentResolver().query(footballUri, null, null, new String[]{string}, DatabaseContract.scores_table.TIME_COL + " asc");
 
         if (cursor == null) {
             return;

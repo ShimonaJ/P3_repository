@@ -145,7 +145,7 @@ public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
                 SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
                String string =mformat.format(fragmentdate);
                 // we'll query our contentProvider, as always
-                Cursor cursor = context.getContentResolver().query(footballUri, null, null, new String[]{string}, DatabaseContract.scores_table.TIME_COL +" desc");
+                Cursor cursor = context.getContentResolver().query(footballUri, null, null, new String[]{string}, DatabaseContract.scores_table.TIME_COL +" asc");
                 String contentText ="";
                 if(cursor.moveToFirst()) {
                     contentText  = "There are "+cursor.getCount()+" events scheduled, and the first will start at "+cursor.getString(2);
