@@ -4,7 +4,15 @@
     android:layout_height="wrap_content"
       android:layout_marginBottom="0dp"
     >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
 
+        android:text="@string/test_text"
+        android:layout_gravity="center"
+        android:gravity="start|center"
+        android:id="@+id/date_textview"
+        />
         <TextView
             android:layout_width="0dp" android:layout_weight="1"
             android:layout_height="match_parent"
@@ -14,7 +22,11 @@ android:textSize="@dimen/TeamNames"
             android:text="@string/test_text"
             android:id="@+id/home_name"/>
 
-
+    <ImageView android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/home_crest"/>
 
             <FrameLayout android:layout_gravity="center" android:padding="5dp"
                 android:layout_width="70dp"
@@ -31,7 +43,11 @@ android:textSize="@dimen/TeamNames"
 
             </FrameLayout>
 
-
+    <ImageView android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:id="@+id/away_crest"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"

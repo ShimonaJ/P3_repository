@@ -1,4 +1,4 @@
-package barqsoft.footballscores;
+package barqsoft.footballscores.widget;
 
 /**
  * Created by Shimona on 2/14/2016.

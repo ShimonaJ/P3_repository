@@ -17,7 +17,7 @@ import java.util.Date;
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
-import barqsoft.footballscores.TodayWidgetProvider;
+import barqsoft.footballscores.widget.TodayWidgetProvider;
 
 /**
  * Created by shimonaj on 2/15/2016.
