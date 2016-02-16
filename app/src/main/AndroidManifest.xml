@@ -75,7 +75,7 @@
         </receiver>
         <receiver
             android:name=".widget.DetailWidgetProvider"
-            android:label="@string/title_widget_today"
+            android:label="@string/title_widget_detail"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -84,6 +84,11 @@
             <meta-data android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info_detail" />
         </receiver>
+        <service
+            android:name=".widget.DetailWidgetRemoteViewService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
 
         <service android:name=".service.myFetchService" />
         <service android:name=".service.WidgetUpdateIntentService" />

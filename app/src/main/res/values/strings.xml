@@ -49,7 +49,8 @@
     <string name="empty_football_list_server_error">No football match information available. The server is not returning valid data. Please check for an updated version of Football.</string>
     <string name="empty_football_list_invalid_location">No football match information available. The location in settings is not recognized by the football server.</string>
 
-    <string name="title_widget_today">Football Today</string>
+    <string name="title_widget_today">Football</string>
+    <string name="title_widget_detail">Football Today</string>
     <!--Account type (for sync-adapter authenticator)        -->
     <!--SyncAdapter related -->
     <string name="sync_account_type">football.scores.com</string>
