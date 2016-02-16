@@ -19,6 +19,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.Target;
 
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import barqsoft.footballscores.DatabaseContract;
@@ -66,10 +68,14 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
                 final long identityToken = Binder.clearCallingIdentity();
                 //   String location = Utility.getPreferredLocation(DetailWidgetRemoteViewsService.this);
                 Uri weatherForLocationUri = DatabaseContract.scores_table.buildScoreWithDate();
+                Date fragmentdate = new Date(System.currentTimeMillis()+(24*3600*1000));
+
+                SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
+                String string =mformat.format(fragmentdate);
                 data = getContentResolver().query(weatherForLocationUri,
                         null,
-                        null,
-                        null,
+                        null
+                        , new String[]{string},
                         DatabaseContract.scores_table.DATE_COL + " ASC");
                 Binder.restoreCallingIdentity(identityToken);
             }
@@ -101,7 +107,6 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
 
                 views.setImageViewResource(R.id.home_crest, homeTeamResourceId);
                 views.setImageViewResource(R.id.away_crest, awayTeamResourceId);
-
                 views.setTextViewText(R.id.home_name, data.getString(COL_HOME));
                 //.setContentDescription(R.id.home_name, data.getString(COL_HOME));
 

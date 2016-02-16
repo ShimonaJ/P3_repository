@@ -42,6 +42,8 @@
 
     <!-- Strings related to Notification preference -->
     <string name="pref_last_notification">last_notification</string>
+
+    <string name="empty_widget_list">Oh dear, No Football Today :( </string>
     <!-- Empty Weather Database -->
     <string name="empty_football_list">No Football Information Available</string>
     <string name="empty_football_list_no_network">No football match information available. The network is not available to fetch football data.</string>
