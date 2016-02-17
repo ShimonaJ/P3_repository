@@ -68,7 +68,7 @@ public class DetailWidgetRemoteViewService extends RemoteViewsService {
                 final long identityToken = Binder.clearCallingIdentity();
                 //   String location = Utility.getPreferredLocation(DetailWidgetRemoteViewsService.this);
                 Uri weatherForLocationUri = DatabaseContract.scores_table.buildScoreWithDate();
-                Date fragmentdate = new Date(System.currentTimeMillis()+(24*3600*1000));
+                Date fragmentdate = new Date(System.currentTimeMillis());
 
                 SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
                 String string =mformat.format(fragmentdate);
