@@ -98,15 +98,6 @@ share_button = (ImageView)view.findViewById(R.id.share_button);
         mICM.setChoiceMode(choiceMode);
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
-//    public MyScoresAdapter(double selected_match_id) {
-//       // mCursor = mCursor;
-//        this.detail_match_id =selected_match_id;
-//        mICM = new ItemChoiceManager(this);
-//        mICM.setChoiceMode(choiceMode);
-//
-//        notifyDataSetChanged();
-//    }
 public void swapCursor(Cursor cursor){
 
     this.mCursor = cursor;
