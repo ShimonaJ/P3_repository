@@ -121,4 +121,22 @@ public class Utilies
             default: return R.drawable.no_icon;
         }
     }
+    public static String getImageUrlForFootball (String teamname)
+    {
+        if (teamname==null){return "https://upload.wikimedia.org/wikipedia/commons/7/76/No_match_today_-_geograph.org.uk_-_1521127.jpg";}
+        switch (teamname)
+        {
+            case "Arsenal London FC" : return "https://upload.wikimedia.org/wikipedia/commons/a/af/Arsenal_vs_Fenerbahce_%289611227081%29.jpg";
+            case "Manchester United FC" : return "https://upload.wikimedia.org/wikipedia/commons/c/cf/Manchester_United_%288051530616%29.jpg";
+//            case "Swansea City" : return R.drawable.swansea_city_afc;
+//            case "Leicester City" : return R.drawable.leicester_city_fc_hd_logo;
+            case "Everton FC" : return "https://upload.wikimedia.org/wikipedia/commons/2/20/DinamoKiev-Everton_%2810%29.jpg";
+            case "West Ham United FC" : return "https://upload.wikimedia.org/wikipedia/commons/e/e8/West_Ham_Vs_Birkrikara_%2819933880632%29.jpg";
+//            case "Tottenham Hotspur FC" : return R.drawable.tottenham_hotspur;
+//            case "West Bromwich Albion" : return R.drawable.west_bromwich_albion_hd_logo;
+//            case "Sunderland AFC" : return R.drawable.sunderland;
+//            case "Stoke City FC" : return R.drawable.stoke_city;
+            default: return "https://upload.wikimedia.org/wikipedia/commons/7/76/No_match_today_-_geograph.org.uk_-_1521127.jpg";
+        }
+    }
 }

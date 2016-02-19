@@ -16,6 +16,7 @@ import java.util.Date;
 
 import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
+import barqsoft.footballscores.Utilies;
 import barqsoft.footballscores.sync.FootballSyncAdapter;
 
 public class FootballMuzeiSource extends MuzeiArtSource {
@@ -47,7 +48,7 @@ public class FootballMuzeiSource extends MuzeiArtSource {
     @Override
     protected void onUpdate(int reason) {
         Uri weatherForLocationUri = DatabaseContract.scores_table.buildScoreWithDate();
-        Date fragmentdate = new Date(System.currentTimeMillis()+(24*3600*1000));
+        Date fragmentdate = new Date(System.currentTimeMillis());
         Log.v(LOG_TAG,"onUpdate ");
         SimpleDateFormat mformat = new SimpleDateFormat("yyyy-MM-dd");
         String string =mformat.format(fragmentdate);
@@ -57,20 +58,25 @@ public class FootballMuzeiSource extends MuzeiArtSource {
               , new String[]{string},
               DatabaseContract.scores_table.DATE_COL + " ASC");
         //String contentText  = "There are "+cursor.getCount()+" events scheduled, and the first will start at "+cursor.getString(2);
+        String imageUrl="";
+        if(cursor.getCount()==0){
+            imageUrl="https://upload.wikimedia.org/wikipedia/commons/7/76/No_match_today_-_geograph.org.uk_-_1521127.jpg";
+        }
         if (cursor.moveToFirst()) {
 
-String imageUrl = "https://commons.wikimedia.org/wiki/Category:Manchester_United_FC#/media/File:Manchester_United_(8051530616).jpg";
-           // String imageUrl = Utility.getImageUrlForWeatherCondition(weatherId);
+           // imageUrl = "https://upload.wikimedia.org/wikipedia/commons/c/cf/Manchester_United_%288051530616%29.jpg";
+             imageUrl = Utilies.getImageUrlForFootball(cursor.getString(COL_HOME));
             // Only publish a new wallpaper if we have a valid image
-            if (imageUrl != null) {
-                publishArtwork(new Artwork.Builder()
-                        .imageUri(Uri.parse(imageUrl))
-                        .title("Match at "+cursor.getString(COL_MATCHTIME)+" today")
-                        .byline("Teams: "+cursor.getString(COL_HOME)+" v/s "+cursor.getString(COL_AWAY))
-                        .viewIntent(new Intent(this, MainActivity.class))
-                        .build());
-                Log.v(LOG_TAG, "onUpdate ");
-            }
+
+        }
+        if (imageUrl != null) {
+            publishArtwork(new Artwork.Builder()
+                    .imageUri(Uri.parse(imageUrl))
+                    .title("Match at "+cursor.getString(COL_MATCHTIME)+" today")
+                    .byline("Teams: "+cursor.getString(COL_HOME)+" v/s "+cursor.getString(COL_AWAY))
+                    .viewIntent(new Intent(this, MainActivity.class))
+                    .build());
+            Log.v(LOG_TAG, "onUpdate ");
         }
         cursor.close();
     }
