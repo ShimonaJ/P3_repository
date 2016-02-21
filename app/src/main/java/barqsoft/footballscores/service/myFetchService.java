@@ -41,7 +41,7 @@ public class myFetchService extends IntentService
         super("myFetchService");
     }
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FOOTBALL_STATUS_OK, FOOTBALL_STATUS_SERVER_DOWN, FOOTBALL_STATUS_SERVER_INVALID,  FOOTBALL_STATUS_UNKNOWN, FOOTBALL_STATUS_INVALID})
+    @IntDef({FOOTBALL_STATUS_OK, FOOTBALL_STATUS_SERVER_DOWN, FOOTBALL_STATUS_SERVER_INVALID,  FOOTBALL_STATUS_UNKNOWN, FOOTBALL_STATUS_INVALID,FOOTBALL_STATUS_NO_NETWORK})
     public @interface FootballStatus {}
 
     public static final int FOOTBALL_STATUS_OK = 0;
@@ -49,6 +49,7 @@ public class myFetchService extends IntentService
     public static final int FOOTBALL_STATUS_SERVER_INVALID = 2;
     public static final int FOOTBALL_STATUS_UNKNOWN = 3;
     public static final int FOOTBALL_STATUS_INVALID = 4;
+    public static final int FOOTBALL_STATUS_NO_NETWORK = 5;
 
     @Override
     protected void onHandleIntent(Intent intent)

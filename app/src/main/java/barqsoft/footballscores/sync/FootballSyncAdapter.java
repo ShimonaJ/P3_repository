@@ -52,6 +52,7 @@ import barqsoft.footballscores.DatabaseContract;
 import barqsoft.footballscores.MainActivity;
 import barqsoft.footballscores.R;
 import barqsoft.footballscores.Utilies;
+import barqsoft.footballscores.muzei.FootballMuzeiSource;
 
 
 public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
@@ -65,7 +66,7 @@ public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
     public static final int SYNC_FLEXTIME = SYNC_INTERVAL/3;
     private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
     @Retention(RetentionPolicy.SOURCE)
-    @IntDef({FOOTBALL_STATUS_OK, FOOTBALL_STATUS_SERVER_DOWN, FOOTBALL_STATUS_SERVER_INVALID,  FOOTBALL_STATUS_UNKNOWN, FOOTBALL_STATUS_INVALID})
+    @IntDef({FOOTBALL_STATUS_OK, FOOTBALL_STATUS_SERVER_DOWN, FOOTBALL_STATUS_SERVER_INVALID,  FOOTBALL_STATUS_UNKNOWN, FOOTBALL_STATUS_INVALID,FOOTBALL_STATUS_NO_NETWORK})
     public @interface FootballStatus {}
 
     public static final int FOOTBALL_STATUS_OK = 0;
@@ -73,6 +74,7 @@ public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
     public static final int FOOTBALL_STATUS_SERVER_INVALID = 2;
     public static final int FOOTBALL_STATUS_UNKNOWN = 3;
     public static final int FOOTBALL_STATUS_INVALID = 4;
+    public static final int FOOTBALL_STATUS_NO_NETWORK = 5;
     private static final int FOOTBALL_NOTIFICATION_ID = 3004;
     public FootballSyncAdapter(Context context, boolean autoInitialize) {
         super(context, autoInitialize);
@@ -240,7 +242,11 @@ public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
     }
     private void getData (String timeFrame)
     {
-
+        if (!Utilies.isNetworkAvailable(getContext())) {
+            setFootballStatus(getContext(),FOOTBALL_STATUS_NO_NETWORK);
+            return;
+           // message = R.string.empty_football_list_no_network;
+        }
         //Creating fetch URL
         final String BASE_URL = "http://api.football-data.org/alpha/fixtures"; //Base URL
         final String QUERY_TIME_FRAME = "timeFrame"; //Time Frame parameter to determine days
@@ -457,12 +463,23 @@ public class FootballSyncAdapter extends AbstractThreadedSyncAdapter {
                 DatabaseContract.BASE_CONTENT_URI,insert_data);
         updateWidgets();
         notifyFootball();
+        updateMuzei();
+
         setFootballStatus(mContext, FOOTBALL_STATUS_OK);
 
         //Log.v(LOG_TAG,"Succesfully Inserted : " + String.valueOf(inserted_data));
 
 
 
+    }
+    private void updateMuzei() {
+        // Muzei is only compatible with Jelly Bean MR1+ devices, so there's no need to update the
+        // Muzei background on lower API level devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Context context = getContext();
+            context.startService(new Intent(ACTION_DATA_UPDATED)
+                    .setClass(context, FootballMuzeiSource.class));
+        }
     }
 
     /**

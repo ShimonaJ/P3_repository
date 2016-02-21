@@ -13,7 +13,7 @@ android:focusable="true"
         <android.support.v4.view.PagerTabStrip  android:background="@color/primary_dark"
             android:id="@+id/pager_header"   android:textColor="@color/white"
             android:layout_width="match_parent" android:focusable="true"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:layout_gravity="top"
             android:paddingBottom="4dp" android:paddingLeft="16dp" android:paddingRight="16dp"
             android:paddingTop="4dp" />

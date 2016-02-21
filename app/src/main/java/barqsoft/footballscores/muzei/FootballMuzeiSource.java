@@ -12,6 +12,7 @@ import com.google.android.apps.muzei.api.Artwork;
 import com.google.android.apps.muzei.api.MuzeiArtSource;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import barqsoft.footballscores.DatabaseContract;
@@ -62,22 +63,24 @@ public class FootballMuzeiSource extends MuzeiArtSource {
         if(cursor.getCount()==0){
             imageUrl="https://upload.wikimedia.org/wikipedia/commons/7/76/No_match_today_-_geograph.org.uk_-_1521127.jpg";
         }
-        if (cursor.moveToFirst()) {
-
-           // imageUrl = "https://upload.wikimedia.org/wikipedia/commons/c/cf/Manchester_United_%288051530616%29.jpg";
-             imageUrl = Utilies.getImageUrlForFootball(cursor.getString(COL_HOME));
-            // Only publish a new wallpaper if we have a valid image
-
+        ArrayList l = new ArrayList();
+        while(cursor.moveToNext()){
+            l.add(cursor.getString(COL_HOME));
         }
-        if (imageUrl != null) {
+        if(l.contains("Arsenal London FC") || l.contains("Manchester United FC") || l.contains("Everton FC") ||l.contains("West Ham United FC") ){
+            imageUrl = Utilies.getImageUrlForFootball(cursor.getString(COL_HOME));
+        }
+        if(imageUrl!=""){
             publishArtwork(new Artwork.Builder()
                     .imageUri(Uri.parse(imageUrl))
                     .title("Match at "+cursor.getString(COL_MATCHTIME)+" today")
                     .byline("Teams: "+cursor.getString(COL_HOME)+" v/s "+cursor.getString(COL_AWAY))
                     .viewIntent(new Intent(this, MainActivity.class))
                     .build());
-            Log.v(LOG_TAG, "onUpdate ");
+            Log.v(LOG_TAG, "updating wallpaper ");
         }
+
+
         cursor.close();
     }
 }

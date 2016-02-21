@@ -34,7 +34,7 @@ import barqsoft.footballscores.sync.FootballSyncAdapter;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
+public class MainScreenFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>, SharedPreferences.OnSharedPreferenceChangeListener
 {
   //  public ScoresAdapter mAdapter;
     public static final int SCORES_LOADER = 0;
@@ -200,7 +200,7 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
             // to, do so now.
             mRecyclerView.smoothScrollToPosition(mPosition);
         }
-        updateEmptyView();
+        //updateEmptyView();
         if ( cursor.getCount() > 0 ) {
             mRecyclerView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
                 @Override
@@ -224,6 +224,26 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
 
         // ((MyScoresAdapter) mAdapter).notifyDataSetChanged();
         //mAdapter.notifyDataSetChanged();
+    }
+    @Override
+    public void onResume() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.registerOnSharedPreferenceChangeListener(this);
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        sp.unregisterOnSharedPreferenceChangeListener(this);
+        super.onPause();
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if ( key.equals(getString(R.string.pref_football_status_key)) ) {
+            updateEmptyView();
+        }
     }
     /*
            Updates the empty list view with contextually relevant information that the user can
@@ -251,10 +271,13 @@ public class MainScreenFragment extends Fragment implements LoaderManager.Loader
                     case myFetchService.FOOTBALL_STATUS_INVALID:
                         message = R.string.empty_football_list_invalid_location;
                         break;
-                    default:
-                        if (!Utilies.isNetworkAvailable(getActivity())) {
-                            message = R.string.empty_football_list_no_network;
-                        }
+                    case myFetchService.FOOTBALL_STATUS_NO_NETWORK:
+                        message = R.string.empty_football_list_no_network;
+                        break;
+//                    default:
+//                        if (!Utilies.isNetworkAvailable(getActivity())) {
+//                            message = R.string.empty_football_list_no_network;
+//                        }
                 }
                 tv.setText(message);
             }

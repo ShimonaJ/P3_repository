@@ -38,7 +38,7 @@
         ></ListView>
     <TextView android:background="#40FFFFFF"
         android:id="@+id/listview_scores_empty"
-        android:text="@string/empty_widget_list" android:textColor="@color/white"
+         android:textColor="@color/white"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"
